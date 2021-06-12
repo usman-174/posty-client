@@ -21,7 +21,7 @@ export interface ILIKES {
 
 export const fetchPosts = createAsyncThunk(
   "posts/getposts",
-  async (): Promise<string | IPOST[]> => {
+  async ()=> {
     try {
       console.log(process.env.REACT_APP_URL);
 
