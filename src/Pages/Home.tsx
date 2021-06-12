@@ -19,10 +19,11 @@ const Home: React.FC<{}> = (): any => {
   
   const searchPosts = () => {};
   const postState = useAppSelector((state) => state.post);
+  console.log(postState.posts?.length );
   
   return (
     <>
-      {postState.posts?.length ? (
+      {postState.posts && postState.posts?.length ? (
         <>
           <Box ml={isLargerThan600px ? "18%" : "2%"} my="10">
             <Heading textColor="yellow.400">Search Posts</Heading>

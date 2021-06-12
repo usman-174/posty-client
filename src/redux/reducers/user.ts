@@ -24,7 +24,7 @@ export const GetUser = createAsyncThunk("users/getuser", async () => {
       return { username: data.username, email: data.email, id: data.ID,posts:data.posts };
     }
 
-    throw new Error(data.msg);
+    throw new Error("There was an error");
   } catch (error) {
     return error.message;
   }
@@ -87,15 +87,22 @@ export const userSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(GetUser.fulfilled, (state, action:PayloadAction<IUSER>) => {
-      state.email = action.payload.email;
-      state.username = action.payload.username;
-      state.id = action.payload.id;
-      state.posts = action.payload.posts
+      
+      if(typeof action.payload !== "string"){
+        
+        state.email = action.payload.email;
+        state.username = action.payload.username;
+        state.id = action.payload.id;
+        state.posts = action.payload.posts
+      }else{
+        console.log("yeaa");
+        
+      }
       state.loading = false;
+    
     });
     builder.addCase(GetUser.rejected, (state, action) => {
-      state.email = null;
-      state.username = null;
+    
       state.loading = false;
     });
     builder.addCase(SetMyPosts.pending, (state) => {

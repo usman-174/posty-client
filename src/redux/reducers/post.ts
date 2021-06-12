@@ -68,7 +68,6 @@ export const postsSlice = createSlice({
       const index = state.posts.findIndex((e) => {
        return e.ID === action.payload.ID;
       });
-      console.log("index=",index);
       
       state.posts[index] = action.payload;
     },
@@ -79,7 +78,8 @@ export const postsSlice = createSlice({
     });
     builder.addCase(fetchPosts.fulfilled, (state, { payload }) => {
       state.loading = false;
-      if (payload) {
+      
+      if (typeof payload !== "string") {
         state.posts = payload as IPOST[];
       }
     });
