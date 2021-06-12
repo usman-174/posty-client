@@ -23,27 +23,26 @@ export const fetchPosts = createAsyncThunk(
   "posts/getposts",
   async ()=> {
     try {
-      console.log(process.env.REACT_APP_URL);
 
-      // const user = store.getState().user;
       const { data } = await axios.get(`${process.env.REACT_APP_URL}/getposts`);
 
       if (!data.error) {
         return data;
       }
 
-      throw new Error(data.msg);
+      throw new Error("No posts Found");
     } catch (error) {
-      console.error("error = ", error.message);
-      return error.message;
+      return error.message
+      
+      
     }
   }
 );
 
 // Define the initial state using that type
-const initialState: { loading: boolean; posts: IPOST[] } = {
+const initialState: { loading: boolean; posts: IPOST[]|null } = {
   loading: false,
-  posts: [],
+  posts: null,
 };
 
 export const postsSlice = createSlice({
@@ -86,6 +85,7 @@ export const postsSlice = createSlice({
     });
     builder.addCase(fetchPosts.rejected, (state, action) => {
       state.loading = false;
+      state.posts= null
     });
   },
 });

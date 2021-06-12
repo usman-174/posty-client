@@ -14,14 +14,15 @@ import PostCard from "../Components/PostCard";
 import { useAppSelector } from "../redux/hook";
 
 const Home: React.FC<{}> = (): any => {
-  const postState = useAppSelector((state) => state.post);
   const [search, setsearch] = useState("");
   const [isLargerThan600px] = useMediaQuery("(min-width: 600px)");
-
+  
   const searchPosts = () => {};
+  const postState = useAppSelector((state) => state.post);
+  
   return (
     <>
-      {postState?.posts?.length ? (
+      {postState.posts?.length ? (
         <>
           <Box ml={isLargerThan600px ? "18%" : "2%"} my="10">
             <Heading textColor="yellow.400">Search Posts</Heading>
@@ -47,18 +48,15 @@ const Home: React.FC<{}> = (): any => {
             align={isLargerThan600px ? "flex-start" : "center"}
             ml={isLargerThan600px ? "18%" : "2%"}
           >
-            {postState.posts &&
-              postState.posts.length &&
-              postState.posts?.map((post) => {
-                console.log(postState.posts.length);
-                console.log(postState.posts);
-                
-                return (
+            {
+              postState.posts.length ?
+              postState.posts?.map((post) => 
+                 (
                   <span key={post.ID}>
                     <PostCard post={post} />
                   </span>
-                );
-              })}
+                )
+              ) : null}
           </Stack>
         </>
       ) : (
