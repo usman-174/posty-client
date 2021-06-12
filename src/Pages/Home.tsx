@@ -7,7 +7,7 @@ import {
   InputGroup,
   InputLeftElement,
   Stack,
-  useMediaQuery
+  useMediaQuery,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import PostCard from "../Components/PostCard";
@@ -17,10 +17,8 @@ const Home: React.FC<{}> = (): any => {
   const postState = useAppSelector((state) => state.post);
   const [search, setsearch] = useState("");
   const [isLargerThan600px] = useMediaQuery("(min-width: 600px)");
-  
-  const searchPosts = () => {
-    
-  };
+
+  const searchPosts = () => {};
   return (
     <>
       {postState?.posts?.length ? (
@@ -49,11 +47,18 @@ const Home: React.FC<{}> = (): any => {
             align={isLargerThan600px ? "flex-start" : "center"}
             ml={isLargerThan600px ? "18%" : "2%"}
           >
-            {postState.posts.length && postState.posts?.map((post) => (
-              <span key={post.ID}>
-                <PostCard post={post} />
-              </span>
-            ))}
+            {postState.posts &&
+              postState.posts.length &&
+              postState.posts?.map((post) => {
+                console.log(postState.posts.length);
+                console.log(postState.posts);
+                
+                return (
+                  <span key={post.ID}>
+                    <PostCard post={post} />
+                  </span>
+                );
+              })}
           </Stack>
         </>
       ) : (
