@@ -22,7 +22,7 @@ const Register: React.FC<IRegiPropster> = (): any => {
   const [password, setpassword] = useState("");
   const register = async () => {
     try {
-      const { data }: any = await axios.post("http://localhost:4000/register", {
+      const { data }: any = await axios.post(`${process.env.REACT_APP_URL}/register`, {
         email,
         password,
         username,

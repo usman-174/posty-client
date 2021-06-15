@@ -91,7 +91,7 @@ const NavBar: React.FC<INavBar> = (): any => {
           duration: 2000,
         });
       }
-      const {data} = await axios.post("http://localhost:4000/x/updateuser",{
+      const {data} = await axios.post(`${process.env.REACT_APP_URL}/x/updateuser`,{
         id : String(user.id),
         email,username,newpassword : password? password : undefined,
         oldpassword : oldPass
@@ -124,7 +124,7 @@ const NavBar: React.FC<INavBar> = (): any => {
     const logOut = async () => {
       try {
         const { data }: any = await axios.get(
-          "http://localhost:4000/x/logout",
+          `${process.env.REACT_APP_URL}/x/logout`,
           {
             withCredentials: true,
           }

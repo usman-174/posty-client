@@ -19,7 +19,7 @@ const LogIn : React.FC<{}> = (): any=> {
     const Login = async ()=>{
         try {
             const { data } = await axios.post(
-              "http://localhost:4000/login",
+              `${process.env.REACT_APP_URL}/login`,
               {
                 email ,
                 password 
