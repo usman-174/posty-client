@@ -18,20 +18,20 @@ export interface ILOGIN {
 
 export const GetUser = createAsyncThunk("users/getuser", async () => {
   try {
-    const { data } = await axios.get(`${process.env.REACT_APP_URL}/x/user`);
+    const { data } = await axios.get(`/x/user`);
 
     if (!data.error) {
       return { username: data.username, email: data.email, id: data.ID,posts:data.posts };
     }
 
-    throw new Error("There was an error");
+    return false
   } catch (error) {
     return error.message;
   }
 });
 export const SetMyPosts = createAsyncThunk("users/setposts", async () => {
   try {
-    const { data } = await axios.get(`${process.env.REACT_APP_URL}/x/myposts`);
+    const { data } = await axios.get(`/x/myposts`);
 
     if (!data.error && data) {
       return data
@@ -95,7 +95,7 @@ export const userSlice = createSlice({
         state.id = action.payload.id;
         state.posts = action.payload.posts
       }else{
-        console.log("yeaa");
+        console.log("Invalid payload type = ",action?.payload);
         
       }
       state.loading = false;

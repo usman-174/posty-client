@@ -75,7 +75,7 @@ const DropMenu: React.FC<{ deletePost: Function; post: IPOST }> = ({
     try {
      
       const { data } = await axios.post(
-        `${process.env.REACT_APP_URL}/x/updatepost`,
+        `/x/updatepost`,
         {
           title: title.trim(),
           body: body.trim(),

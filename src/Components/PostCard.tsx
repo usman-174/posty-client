@@ -64,7 +64,7 @@ const PostCard: React.FC<IPoPropstCard> = ({
   const dispatch = useAppDispatch();
   const deletePost = async () => {
     const { data } = await axios.post(
-      `${process.env.REACT_APP_URL}/x/deletepost`,
+      `/x/deletepost`,
       {
         id: postId,
       },
@@ -78,14 +78,14 @@ const PostCard: React.FC<IPoPropstCard> = ({
   const likeUnLikePost = async () => {
     setloading(true);
     const { data }: { data: { error: string; msg: string } } = await axios.post(
-      `${process.env.REACT_APP_URL}/x/likepost`,
+      `/x/likepost`,
       {
         id: postId,
       }
     );
     if (!data.error && data.msg) {
       const { data: response } = await axios.get(
-        `${process.env.REACT_APP_URL}/getposts`
+        `/getposts`
       );
       if (!response?.error) {
         dispatch(SetPosts(response));

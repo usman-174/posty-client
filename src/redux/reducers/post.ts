@@ -24,7 +24,7 @@ export const fetchPosts = createAsyncThunk(
   async ()=> {
     try {
 
-      const { data } = await axios.get(`${process.env.REACT_APP_URL}/getposts`);
+      const { data } = await axios.get(`/getposts`);
 
       if (!data.error) {
         return data;

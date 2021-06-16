@@ -44,7 +44,7 @@ const CreatePost: React.FC<{}> = (): any => {
       });
     }
     try {
-      const { data } = await axios.post(`${process.env.REACT_APP_URL}/x/post`, {
+      const { data } = await axios.post(`/x/post`, {
         title: title.trim(),
         body
       });

@@ -19,8 +19,7 @@ const Home: React.FC<{}> = (): any => {
   
   const searchPosts = () => {};
   const postState = useAppSelector((state) => state.post);
-  console.log(postState.posts?.length );
-  
+
   return (
     <>
       {postState.posts && postState.posts?.length ? (
