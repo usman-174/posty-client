@@ -19,7 +19,7 @@ const LogIn : React.FC<{}> = (): any=> {
     const Login = async ()=>{
         try {
             const { data } = await axios.post(
-              `${process.env.REACT_APP_URL}/login`,
+              `/login`,
               {
                 email ,
                 password 
@@ -48,12 +48,12 @@ const LogIn : React.FC<{}> = (): any=> {
             history.push("/")
         }
         // eslint-disable-next-line
-    }, [user])
+    }, [])
 return  !user.email && !user.username && (
 <>
 <Box textAlign="center" m="auto" w="40%">
     <Box my="3" as="h2" color="blue.600" fontWeight="bold" fontSize="3xl">
-    SignIn
+    LogIn
     </Box>
 <FormControl id="email"> 
   <FormLabel>Email address</FormLabel>

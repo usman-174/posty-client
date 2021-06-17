@@ -6,12 +6,9 @@ import {
   Kbd,
   Spacer,
   Spinner,
-  Text, Tooltip,
-
-
-
-
-  useMediaQuery
+  Text,
+  Tooltip,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -37,7 +34,7 @@ const PostCard: React.FC<IPoPropstCard> = ({
     UpdatedAt,
     likes,
     ID: postId,
-    User
+    User : postCreator,
   },
   ...rest
 }): any => {
@@ -57,14 +54,16 @@ const PostCard: React.FC<IPoPropstCard> = ({
         setlike(true);
         return;
       }
+    }else{
+      setlike(false);
     }
     // eslint-disable-next-line
-  }, []);
+  }, [user]);
 
   const dispatch = useAppDispatch();
   const deletePost = async () => {
     const { data } = await axios.post(
-      `${process.env.REACT_APP_URL}/x/deletepost`,
+      `/x/deletepost`,
       {
         id: postId,
       },
@@ -76,37 +75,35 @@ const PostCard: React.FC<IPoPropstCard> = ({
     }
   };
   const likeUnLikePost = async () => {
-    setloading(true);
-    const { data }: { data: { error: string; msg: string } } = await axios.post(
-      `${process.env.REACT_APP_URL}/x/likepost`,
-      {
-        id: postId,
-      }
-    );
-    if (!data.error && data.msg) {
-      const { data: response } = await axios.get(
-        `${process.env.REACT_APP_URL}/getposts`
-      );
-      if (!response?.error) {
-        dispatch(SetPosts(response));
+    if (user.username) {
+      setloading(true);
+      const { data }: { data: { error: string; msg: string } } =
+        await axios.post(`/x/likepost`, {
+          id: postId,
+        });
+      if (!data.error && data.msg) {
+        const { data: response } = await axios.get(`/getposts`);
+        if (!response?.error) {
+          dispatch(SetPosts(response));
 
-        if (pathname.includes("myposts")) {
-          const updatedPosts = (response as IPOST[]).filter(
-            (post) => post.userid === user.id
-          );
-          console.log("updatedPosts=", updatedPosts);
+          if (pathname.includes("myposts")) {
+            const updatedPosts = (response as IPOST[]).filter(
+              (post) => post.userid === user.id
+            );
+            console.log("updatedPosts=", updatedPosts);
 
-          dispatch(UpdatePosts(updatedPosts));
-        }
+            dispatch(UpdatePosts(updatedPosts));
+          }
 
-        if (data.msg.includes("Unliked")) {
-          setloading(false);
+          if (data.msg.includes("Unliked")) {
+            setloading(false);
 
-          return setlike(false);
-        } else {
-          setloading(false);
+            return setlike(false);
+          } else {
+            setloading(false);
 
-          return setlike(true);
+            return setlike(true);
+          }
         }
       }
     }
@@ -136,9 +133,10 @@ const PostCard: React.FC<IPoPropstCard> = ({
       >
         {title}
       </Heading>
-      {User.username && (
+      {postCreator.username && (
         <Text as="small">
-          By <span style={{ color: "red" }}>{User.username.toUpperCase()}</span>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde eligendi dolore excepturi dicta architecto inventore iciatis iste at exercitationem eaque atque ut est maiores. Dicta sunt harum eaque eligendi expedita?
+          By <span style={{ color: "red" }}>{postCreator.username.toUpperCase()}</span>
         </Text>
       )}
       <Text as="small" mx="1">
@@ -153,7 +151,7 @@ const PostCard: React.FC<IPoPropstCard> = ({
             bg="gray.400"
             hasArrow
             color={like ? "blackAlpha.600" : ""}
-            label={like ? "UnLike" : "Like"}
+            label={user.username ? like? "Unline" : "like" : "login to like"}
             aria-label="A tooltip"
           >
             <Kbd onClick={likeUnLikePost}>
@@ -177,24 +175,19 @@ const PostCard: React.FC<IPoPropstCard> = ({
           <>
             <Spacer />
             <Box textAlign="right">
-           
-
               <DropMenu
                 deletePost={deletePost}
-                post={
-                  {
-                    title,
-                    body,
-                    userid: creatorId,
-                    UpdatedAt,
-                    likes,CreatedAt,
-                    ID: postId,
-                    User
-                  }
-                  
-                }
-                />
-               
+                post={{
+                  title,
+                  body,
+                  userid: creatorId,
+                  UpdatedAt,
+                  likes,
+                  CreatedAt,
+                  ID: postId,
+                  User : postCreator,
+                }}
+              />
             </Box>
           </>
         )}

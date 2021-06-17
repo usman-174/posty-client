@@ -8,6 +8,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import "./index.css"
 import axios from "axios";
 axios.defaults.withCredentials = true
+axios.defaults.baseURL = process.env.REACT_APP_URL
 
  
 ReactDOM.render(

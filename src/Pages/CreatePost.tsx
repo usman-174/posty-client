@@ -1,14 +1,14 @@
 import {
   Box,
   Button,
-  FormControl,
-  FormLabel, Input, Text, Textarea, useToast
+  FormControl, FormLabel, Input, Text, Textarea,  useToast
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { fetchPosts } from "../redux/reducers/post";
+
 
 const CreatePost: React.FC<{}> = (): any => {
   const toast = useToast();
@@ -34,6 +34,14 @@ const CreatePost: React.FC<{}> = (): any => {
         isClosable: true,
         duration: 2000,
       });
+    }else if (title.length >= 43) {
+     return  toast({
+        title: `Title length cannot be greater than 42 Characters.`,
+        status: "error",
+        position: "top-right",
+        isClosable: true,
+        duration: 2000,
+      });
     } else if (body.length < 30) {
       return toast({
         title: `Body length must be atleast 50 characters`,
@@ -44,7 +52,7 @@ const CreatePost: React.FC<{}> = (): any => {
       });
     }
     try {
-      const { data } = await axios.post(`${process.env.REACT_APP_URL}/x/post`, {
+      const { data } = await axios.post(`/x/post`, {
         title: title.trim(),
         body
       });
@@ -110,9 +118,19 @@ const CreatePost: React.FC<{}> = (): any => {
             </Text>
           )}
         </FormControl>
-        <Button mt="2" colorScheme="messenger" onClick={Post}>
+        <Button mt="4" colorScheme="messenger" onClick={Post}>
           Publish Post
         </Button>
+        {/* <Link
+              
+              textDecoration="none"
+              as={ReactLink}
+              to="/login"
+            > */}
+              <Button onClick={()=>history.goBack()} colorScheme="red"  mt="4" ml="5" variant="solid" p="2">
+                Cancel
+              </Button>
+            {/* </Link> */}
       </Box>
     </>
   );

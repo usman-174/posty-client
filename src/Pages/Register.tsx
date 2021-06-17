@@ -22,7 +22,7 @@ const Register: React.FC<IRegiPropster> = (): any => {
   const [password, setpassword] = useState("");
   const register = async () => {
     try {
-      const { data }: any = await axios.post(`${process.env.REACT_APP_URL}/register`, {
+      const { data }: any = await axios.post(`/register`, {
         email,
         password,
         username,
@@ -56,14 +56,14 @@ const Register: React.FC<IRegiPropster> = (): any => {
       history.push("/");
     }
     // eslint-disable-next-line
-  }, [user]);
+  }, []);
   return (
     !user.email &&
     !user.username && (
       <>
         <Box textAlign="center" m="auto" w="40%">
           <Box my="3" as="h2" color="blue.600" fontWeight="bold" fontSize="3xl">
-            SignUp
+            Register
           </Box>
           <FormControl id="email">
             <FormLabel>Email address</FormLabel>
