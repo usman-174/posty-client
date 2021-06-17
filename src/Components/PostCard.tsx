@@ -54,9 +54,11 @@ const PostCard: React.FC<IPoPropstCard> = ({
         setlike(true);
         return;
       }
+    }else{
+      setlike(false);
     }
     // eslint-disable-next-line
-  }, []);
+  }, [user]);
 
   const dispatch = useAppDispatch();
   const deletePost = async () => {
@@ -133,6 +135,7 @@ const PostCard: React.FC<IPoPropstCard> = ({
       </Heading>
       {postCreator.username && (
         <Text as="small">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde eligendi dolore excepturi dicta architecto inventore iciatis iste at exercitationem eaque atque ut est maiores. Dicta sunt harum eaque eligendi expedita?
           By <span style={{ color: "red" }}>{postCreator.username.toUpperCase()}</span>
         </Text>
       )}

@@ -34,6 +34,14 @@ const CreatePost: React.FC<{}> = (): any => {
         isClosable: true,
         duration: 2000,
       });
+    }else if (title.length >= 43) {
+     return  toast({
+        title: `Title length cannot be greater than 42 Characters.`,
+        status: "error",
+        position: "top-right",
+        isClosable: true,
+        duration: 2000,
+      });
     } else if (body.length < 30) {
       return toast({
         title: `Body length must be atleast 50 characters`,
