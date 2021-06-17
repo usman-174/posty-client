@@ -1,26 +1,21 @@
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 import {
-  Box,
+  Avatar, Box,
   Button,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
   DrawerFooter,
-  DrawerHeader,
-  Text,
-  DrawerOverlay,
+  DrawerHeader, DrawerOverlay,
   Flex,
   FormControl,
-  FormLabel,
-  Avatar,
-  Input,
+  FormLabel, Input,
   Link,
-  Spacer,
-  useDisclosure,
+  Spacer, Text, useDisclosure,
   useMediaQuery,
-  useToast,
+  useToast
 } from "@chakra-ui/react";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import React, { useState } from "react";
 import { Link as ReactLink, useHistory } from "react-router-dom";
@@ -173,6 +168,7 @@ const NavBar: React.FC<INavBar> = (): any => {
           <Link textDecoration="none" as={ReactLink} to="/">
             POSTY
           </Link>
+          
         </Box>
         {isLargerThan600px && <Spacer />}
         {!user.email && !user.username ? (
@@ -236,6 +232,17 @@ const NavBar: React.FC<INavBar> = (): any => {
               my={!isLargerThan600px && "12px"}
             >
               Create Post
+            </Link>
+            <Link
+              textDecoration="none"
+              as={ReactLink}
+              to="/postadaw"
+              mx="3"
+              fontSize="18.6px"
+              color="blue.500"
+              my={!isLargerThan600px && "12px"}
+            >
+              not found
             </Link>
             <Link
               textDecoration="none"

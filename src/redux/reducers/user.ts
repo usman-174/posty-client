@@ -16,17 +16,17 @@ export interface ILOGIN {
   password: string;
 }
 
-export const GetUser = createAsyncThunk("users/getuser", async () => {
+export const GetUser = createAsyncThunk("users/getuser", async (): Promise<any> => {
   try {
     const { data } = await axios.get(`/x/user`);
 
     if (!data.error) {
       return { username: data.username, email: data.email, id: data.ID,posts:data.posts };
     }
-
-    return false
+    
+    throw new Error("false")
   } catch (error) {
-    return error.message;
+    return false
   }
 });
 export const SetMyPosts = createAsyncThunk("users/setposts", async () => {
@@ -83,28 +83,27 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // GET USER BUILDER ---------------------------------------------------
     builder.addCase(GetUser.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(GetUser.fulfilled, (state, action:PayloadAction<IUSER>) => {
-      
-      if(typeof action.payload !== "string"){
+      console.log(" payload type = ",action?.payload);
+      if(action.payload){
         
         state.email = action.payload.email;
         state.username = action.payload.username;
         state.id = action.payload.id;
         state.posts = action.payload.posts
-      }else{
-        console.log("Invalid payload type = ",action?.payload);
-        
       }
       state.loading = false;
-    
     });
     builder.addCase(GetUser.rejected, (state, action) => {
     
       state.loading = false;
     });
+
+    // POSTS BUILDER ----------------------------------------------------
     builder.addCase(SetMyPosts.pending, (state) => {
       state.postsLoading = true;
     });

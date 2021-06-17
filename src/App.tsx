@@ -1,6 +1,6 @@
 import { Box, Spinner } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route,Switch } from "react-router-dom";
 import NavBar from "./Components/NavBar";
 import Home from './Pages/Home';
 import Login from "./Pages/Login";
@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "./redux/hook";
 import { fetchPosts } from "./redux/reducers/post";
 import { GetUser } from "./redux/reducers/user";
 import MyPosts from "./Pages/MyPosts";
+import NotFound from "./Pages/NotFound_404";
 function App() {
   const dispatch = useAppDispatch()
   const user = useAppSelector((state) => state.user);
@@ -31,11 +32,16 @@ function App() {
   return (
     <Router>
       <NavBar/>
+      <Switch>
+
     <Route exact path="/" component={Home} />
     <Route exact path="/login" component={Login} />
     <Route exact path="/register" component={Register} />
     <ProtectedRouter path="/post" component={CreatePost} />
     <ProtectedRouter path="/myposts" component={MyPosts} />
+    <Route exact path="*" component={NotFound} />
+      </Switch>
+    {/* <Redirect to="/404" /> */}
   </Router>
   );
 }
